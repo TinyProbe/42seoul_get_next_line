@@ -5,7 +5,7 @@
 #  define BUFFER_SIZE 10
 # endif
 
-# define MAX_FILE   1000
+# define MAX_FILE   100000000 / BUFFER_SIZE
 # define MAX_LENGTH 100000
 
 # include <unistd.h>
