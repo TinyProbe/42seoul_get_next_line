@@ -1,12 +1,15 @@
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
-# include <unistd.h>
-# include <stdlib.h>
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
 # endif
+
+# define MAX_FILE   1000
+# define MAX_LENGTH 100000
+
+# include <unistd.h>
+# include <stdlib.h>
 
 typedef struct s_buf
 {
@@ -16,5 +19,6 @@ typedef struct s_buf
 }   t_buf;
 
 char    *get_next_line(int fd);
+char    *ft_strdup(const char *s1, size_t len);
 
 #endif
