@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 16:08:39 by tkong             #+#    #+#             */
-/*   Updated: 2022/08/03 09:33:49 by tkong            ###   ########.fr       */
+/*   Updated: 2022/08/03 11:50:41 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ static t_buf	*find_buf(t_buf *buf, int fd)
 {
 	while (buf->fd && buf->fd != fd)
 		++buf;
-	if (!(buf->fd))
-		buf->fd = fd;
+	buf->fd = fd;
 	return (buf);
 }
 

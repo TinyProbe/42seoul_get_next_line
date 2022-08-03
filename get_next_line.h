@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 16:08:35 by tkong             #+#    #+#             */
-/*   Updated: 2022/08/03 09:34:21 by tkong            ###   ########.fr       */
+/*   Updated: 2022/08/03 11:49:48 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #  define BUFFER_SIZE 10
 # endif
 
-# define MAX_FILE	100000000 / BUFFER_SIZE
+# define MAX_FILE	((BUFFER_SIZE) < 100000 ? 1000 : 100000000 / (BUFFER_SIZE))
 # define MAX_LENGTH	100000
 
 # include <unistd.h>
