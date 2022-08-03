@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 16:08:42 by tkong             #+#    #+#             */
-/*   Updated: 2022/08/02 16:08:43 by tkong            ###   ########.fr       */
+/*   Updated: 2022/08/03 09:34:25 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # endif
 
 # define MAX_FILE	100000000 / BUFFER_SIZE
-# define MAX_LENGTH	1000000
+# define MAX_LENGTH	100000
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -27,6 +27,7 @@ typedef struct s_buf
 {
 	char	buf[BUFFER_SIZE];
 	int		idx;
+	int		len;
 	int		fd;
 }	t_buf;
 
