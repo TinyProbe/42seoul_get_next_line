@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 16:08:39 by tkong             #+#    #+#             */
-/*   Updated: 2022/08/03 11:50:41 by tkong            ###   ########.fr       */
+/*   Updated: 2022/08/03 13:19:29 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*get_next_line(int fd)
 	char			str[MAX_LENGTH];
 	int				idx;
 
+	if (fd < 0)
+		return (0);
 	cur = buf;
 	if (fd)
 		cur = find_buf(buf + 1, fd);
@@ -29,12 +31,14 @@ char	*get_next_line(int fd)
 	while (1)
 	{
 		if (cur->idx == cur->len && !fill_buf(cur))
+		{
+			if (idx)
+				return (ft_strdup(str, idx));
 			return (0);
+		}
 		str[idx++] = cur->buf[cur->idx++];
 		if (str[idx - 1] == '\n')
 			return (ft_strdup(str, idx));
-		if (!~str[idx - 1] || !str[idx - 1])
-			return (ft_strdup(str, idx - 1));
 	}
 }
 
