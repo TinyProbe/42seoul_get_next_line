@@ -6,7 +6,7 @@
 /*   By: tkong <tkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 16:08:35 by tkong             #+#    #+#             */
-/*   Updated: 2022/08/04 13:46:47 by tkong            ###   ########.fr       */
+/*   Updated: 2022/08/05 13:08:40 by tkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
+#  define BUFFER_SIZE 10000
 # endif
 
-# define MAX_FILE 1000
-# define MAX_LENGTH 100000
+# define MAX_FILE 10000
+# define MAX_LENGTH 1000000
 
 # include <unistd.h>
 # include <stdlib.h>
