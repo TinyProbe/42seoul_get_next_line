@@ -14,21 +14,20 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000
+#  define BUFFER_SIZE 1024
 # endif
 
-# define MAX_FILE 10000
-# define MAX_LENGTH 1000000
+# define MAX_LENGTH 8379365
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
 
 typedef struct s_buf
 {
 	char	buf[BUFFER_SIZE];
 	int		idx;
 	int		len;
-	int		fd;
 }	t_buf;
 
 char	*get_next_line(int fd);

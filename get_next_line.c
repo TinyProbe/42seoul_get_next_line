@@ -12,51 +12,38 @@
 
 #include "get_next_line.h"
 
-static t_buf	*find_buf(t_buf *buf, int fd);
-static int		fill_buf(t_buf *buf);
+static int	fill_buf(t_buf *buf, int fd);
 
 char	*get_next_line(int fd)
 {
-	static t_buf	buf[MAX_FILE];
-	t_buf			*cur;
+	static t_buf	buf[INT_MAX];
 	char			str[MAX_LENGTH];
 	int				idx;
 
 	if (fd < 0)
 		return (0);
-	cur = buf;
-	if (fd)
-		cur = find_buf(buf + 1, fd);
 	idx = 0;
 	while (1)
 	{
-		if (cur->idx == cur->len && !fill_buf(cur))
+		if (buf[fd].idx == buf[fd].len && !fill_buf(buf, fd))
 		{
 			if (idx)
 				return (ft_strdup(str, idx));
 			return (0);
 		}
-		str[idx++] = cur->buf[cur->idx++];
+		str[idx++] = buf[fd].buf[buf[fd].idx++];
 		if (str[idx - 1] == '\n')
 			return (ft_strdup(str, idx));
 	}
 }
 
-static t_buf	*find_buf(t_buf *buf, int fd)
+static int	fill_buf(t_buf *buf, int fd)
 {
-	while (buf->fd && buf->fd != fd)
-		++buf;
-	buf->fd = fd;
-	return (buf);
-}
-
-static int	fill_buf(t_buf *buf)
-{
-	buf->idx = 0;
-	buf->len = read(buf->fd, buf->buf, BUFFER_SIZE);
-	if (buf->len <= 0)
+	buf[fd].idx = 0;
+	buf[fd].len = read(fd, buf[fd].buf, BUFFER_SIZE);
+	if (buf[fd].len <= 0)
 	{
-		buf->idx = buf->len;
+		buf[fd].idx = buf[fd].len;
 		return (0);
 	}
 	return (1);
