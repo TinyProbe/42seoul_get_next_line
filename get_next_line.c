@@ -12,52 +12,69 @@
 
 #include "get_next_line.h"
 
-static t_buf	*find_buf(t_buf *buf, int fd);
-static int		fill_buf(t_buf *buf);
-
-char	*get_next_line(int fd)
+static t_file *find(t_file *file, int fd)
 {
-	static t_buf	buf[MAX_FILE];
-	t_buf			*cur;
-	char			str[MAX_LEN];
-	int				idx;
-
-	if (fd < 0)
-		return (0);
-	cur = buf;
-	if (fd)
-		cur = find_buf(buf + 1, fd);
-	idx = 0;
-	while (1)
-	{
-		if (cur->idx == cur->len && !fill_buf(cur))
-		{
-			if (idx)
-				return (ft_strdup(str, idx));
-			return (0);
-		}
-		str[idx++] = cur->buf[cur->idx++];
-		if (str[idx - 1] == '\n')
-			return (ft_strdup(str, idx));
-	}
+  while (file->fd && file->fd != fd)
+    ++file;
+  file->fd = fd;
+  return (file);
 }
 
-static t_buf	*find_buf(t_buf *buf, int fd)
+static int fill(t_file *file)
 {
-	while (buf->fd && buf->fd != fd)
-		++buf;
-	buf->fd = fd;
-	return (buf);
+  file->len = read(file->fd, file->buf, BUFFER_SIZE);
+  file->idx = 0;
+  if (file->len <= 0)
+  {
+    file->idx = file->len;
+    return (0);
+  }
+  return (1);
 }
 
-static int	fill_buf(t_buf *buf)
+static int pulchr(char *buf, t_file *f, unsigned long *idx)
 {
-	buf->idx = 0;
-	buf->len = read(buf->fd, buf->buf, BUFFER_SIZE);
-	if (buf->len <= 0)
-	{
-		buf->idx = buf->len;
-		return (0);
-	}
-	return (1);
+  if (f->idx >= f->len && fill(f) == 0)
+  {
+    if (*idx > 0)
+      return (2);
+    else
+      return (1);
+  }
+  buf[(*idx)++] = f->buf[f->idx++];
+  if (buf[*idx - 1] == '\n')
+    return (2);
+  return (0);
+}
+
+static void *ft_memdup(void const *p, unsigned long size)
+{
+  void *rtn;
+
+  rtn = (void *)malloc(size);
+  while (size--)
+    ((char *)rtn)[size] = ((char *)p)[size];
+  return (rtn);
+}
+
+char *get_next_line(int fd)
+{
+  static t_file file[MAX_FILE];
+  char buf[MAX_LEN];
+  t_file *f;
+  unsigned long idx;
+  unsigned long sel;
+
+  f = file;
+  idx = 0;
+  if (fd > 0)
+    f = find(file + 1, fd);
+  while (1)
+  {
+    sel = pulchr(buf, f, &idx);
+    if (sel == 1)
+      return ((char *)0);
+    else if (sel == 2)
+      return ((char *)ft_memdup(buf, idx));
+  }
 }

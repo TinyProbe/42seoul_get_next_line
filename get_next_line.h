@@ -14,24 +14,23 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 512
 # endif
 
 # define MAX_FILE 10000
-# define MAX_LEN 500000
+# define MAX_LEN 100000
 
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct s_buf
+typedef struct s_file
 {
-	char	buf[BUFFER_SIZE];
-	int		idx;
-	int		len;
-	int		fd;
-}	t_buf;
+  int fd;
+  char buf[BUFFER_SIZE];
+  int len;
+  int idx;
+} t_file;
 
-char	*get_next_line(int fd);
-char	*ft_strdup(const char *s1, size_t len);
+char *get_next_line(int fd);
 
 #endif
